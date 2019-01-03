@@ -1,11 +1,11 @@
 library(ggplot2)
 library(reshape2)
 
-setwd("C:\\Users\\richa\\Documents\\GitHub\\github-bq")
+
 
 months = read.csv("month-repo-type-frequency.csv")
 
-relevant_repos = c("decred/dcrd", "decred/dcrdocs", "decred/decrediton", "")
+relevant_repos = c("decred/dcrd", "decred/dcrdocs", "decred/decrediton", "decred/dcrandroid", "decred/politeia", "decred/politeiagui", "decred/dcrwallet", "decred/dcrdata")
 relevant_events = c("PushEvent", "ForkEvent", "IssuesEvent", "IssueCommentEvent", "PullRequestEvent", "PullRequestReviewCommentEvent")
 
 
@@ -20,9 +20,5 @@ p.monthly.repo = ggplot(months, aes(x = month, y = event_frequency, colour = eve
   geom_line()+
   facet_wrap(~repo_name, ncol = 1, scales = "free_y")
 
-head(months)
-table(months$repo_name)
-
-pushes = months[months$event_type == "PushEvent",]
-
+ggsave("2017-repo-events-monthly.png", height = 14, width = 8)
 
