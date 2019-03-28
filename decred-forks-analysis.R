@@ -2,7 +2,6 @@ library(ggplot2)
 library(reshape2)
 library(jsonlite)
 
-
 forks2016 = read.csv("dcrforks2016.csv", stringsAsFactors = FALSE)
 forks2017 = read.csv("dcrforks2017.csv", stringsAsFactors = FALSE)
 forks2018 = read.csv("dcrforks2018.csv", stringsAsFactors = FALSE)
@@ -89,7 +88,7 @@ push.events = forkevents[forkevents$type == "PushEvent",]
 for(push in push.events$id)
 {
   payload = fromJSON(push.events$payload[push.events$id == push], flatten = TRUE) 
-  push.events$head[push.events$id == push] = 
+  push.events$head[push.events$id == push] 
 }
 
   
@@ -129,8 +128,6 @@ dcr.pr.events = dcr.pr.events[dcr.pr.events$id != 4848078022,]
 dcr.pr.events = dcr.pr.events[dcr.pr.events$id != 6274134239,]
 dcr.pr.events = dcr.pr.events[dcr.pr.events$id != 6722058001,]
 dcr.pr.events = dcr.pr.events[dcr.pr.events$id != 5321818466,]
-dcr.pr.events = dcr.pr.events[dcr.pr.events$id != ,]
-dcr.pr.events = dcr.pr.events[dcr.pr.events$id != ,]
 
 for(pr in dcr.pr.events$id[dcr.pr.events$type == "PullRequestEvent"])
 {
