@@ -1,8 +1,7 @@
 library(ggplot2)
 library(reshape2)
 
-
-relevant_repos = c("decred/dcrd", "decred/dcrdocs", "decred/decrediton", "decred/dcrandroid", "decred/politeia", "decred/politeiagui", "decred/dcrwallet", "decred/dcrdata", "decred/dcrtime", "decred/dcrweb", "decred/contractor-mgmt")
+relevant_repos = c("decred/dcrd", "decred/dcrdocs", "decred/decrediton", "decred/dcrandroid", "decred/politeia", "decred/politeiagui", "decred/dcrwallet", "decred/dcrdata", "decred/dcrtime", "decred/dcrweb")
 relevant_events = c("PushEvent", "ForkEvent", "IssuesEvent", "IssueCommentEvent", "PullRequestEvent", "PullRequestReviewCommentEvent")
 relevant_events = c("PushEvent", "ForkEvent", "IssuesEvent",  "PullRequestEvent")
 
@@ -15,13 +14,6 @@ events.month.2018$year = "2018"
 
 months = rbind(events.month.2017, events.month.2018)
 
-months = events.month.2018
-
-#months = months[months$repo_name %in% relevant_repos,]
-
-
-#alternative, set other repos to Misc
-#months$repo_name[!months$repo_name %in% c("decred/dcrd", "decred/dcrdocs", "decred/decrediton", "decred/dcrandroid", "decred/politeia", "decred/politeiagui", "decred/dcrwallet", "decred/dcrdata", "decred/contractor-")] = "decred/misc"
 
 months = months[months$repo_name %in% relevant_repos,] 
 
@@ -33,15 +25,16 @@ months$daya = as.POSIXct(months$day, format = "%Y-%m-%d")
 
 months = months[months$month != "2019-01",]
 
-p.monthly = ggplot(months, aes(x = daya, y = event_frequency, colour = repo_name))+
-  geom_line()+
-  facet_wrap(~event_type, ncol = 1, scales = "free_y")
 
 p.monthly.repo = ggplot(months, aes(x = daya, y = event_frequency, colour = event_type))+
   geom_line()+
-  facet_wrap(~repo_name, ncol = 1, scales = "free_y")
+  facet_wrap(~repo_name, ncol = 1, scales = "free_y")+
+  xlab("Month")+
+  ylab("Event Frequency")+
+  labs(colour = "Event Type")
+  
 
-ggsave("2018-repo-events-monthly.png", height = 14, width = 8)
+ggsave("2017-18-decred-repo-events-monthly.png", height = 14, width = 8)
 
 
 
